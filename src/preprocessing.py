@@ -15,17 +15,22 @@ PART 2: Pre-processing
 - Print pred_universe.head()
 - Return `df_arrests` for use in main.py for PART 3; if you can't figure this out, save as a .csv in `data/` and read into PART 3 in main.py
 '''
-import pandas as pd
 
-def load_data(data_dir):
+import pandas as pd
+import os
+
+def load_data():
     """
     Load the preprocessed datasets from the data directory.
     
     :param data_dir: Directory where the datasets are
     :return: Tuple of DataFrames (pred_universe, arrest_events)
     """
-    pred_universe_path = f"{data_dir}/pred_universe_raw.csv"
-    arrest_events_path = f"{data_dir}/arrest_events_raw.csv"
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    data_dir = os.path.join(base_dir, "..", "data")
+    
+    pred_universe_path = os.path.join(data_dir, 'pred_universe_raw.csv')
+    arrest_events_path = os.path.join(data_dir, 'arrest_events_raw.csv')
     
     pred_universe = pd.read_csv(pred_universe_path)
     arrest_events = pd.read_csv(arrest_events_path)
@@ -120,7 +125,7 @@ def preprocess(data_dir):
     :return: Preprocessed DataFrame `df_arrests`
     """
     # Load data
-    pred_universe, arrest_events = load_data(data_dir)
+    pred_universe, arrest_events = load_data()
     
     # Merge datasets
     df_arrests = merge_datasets(pred_universe, arrest_events)
@@ -144,6 +149,7 @@ def preprocess(data_dir):
     return df_arrests
 
 if __name__ == "__main__":
-    data_dir = "./data"
-    df_arrests = preprocess(data_dir)
-    df_arrests.to_csv(f"{data_dir}/df_arrests.csv", index=False)
+    df_arrests = preprocess()
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    data_dir = os.path.join(base_dir, "..", "data")
+    df_arrests.to_csv(os.path.join(data_dir, 'df_arrests.csv'), index=False)

@@ -17,6 +17,8 @@ from sklearn.calibration import calibration_curve
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import roc_auc_score
+import pandas as pd
+import os
 
 # Calibration plot function 
 def calibration_plot(y_true, y_prob, n_bins=10):
@@ -69,10 +71,11 @@ def compute_metrics(df, pred_col, true_col='y'):
     return ppv_top_50, auc
 
 if __name__ == "__main__":
-    data_dir = "./data"
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    data_dir = os.path.join(base_dir, "..", "data")
     
     # Load data
-    df_arrests_test_with_dt = pd.read_csv(f"{data_dir}/df_arrests_test_with_dt.csv")
+    df_arrests_test_with_dt = pd.read_csv(os.path.join(data_dir, 'df_arrests_test_with_dt.csv'))
     
     # Calibration plots
     print("Creating calibration plot for logistic regression model...")
@@ -101,3 +104,5 @@ if __name__ == "__main__":
         print("Both metrics agree that the decision tree model is more accurate.")
     else:
         print("The metrics do not agree on which model is more accurate.")
+
+

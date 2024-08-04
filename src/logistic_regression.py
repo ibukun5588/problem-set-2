@@ -14,6 +14,7 @@ PART 3: Logistic Regression
 
 import pandas as pd
 import numpy as np
+import os
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.linear_model import LogisticRegression as lr
 
@@ -56,7 +57,12 @@ def logistic_regression(df_arrests):
     return df_arrests_test, gs_cv
 
 if __name__ == "__main__":
-    data_dir = "./data"
-    df_arrests = pd.read_csv(f"{data_dir}/df_arrests.csv")
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    data_dir = os.path.join(base_dir, "..", "data")
+    
+    df_arrests = pd.read_csv(os.path.join(data_dir, 'df_arrests.csv'))
     df_arrests_test, gs_cv = logistic_regression(df_arrests)
-    df_arrests_test.to_csv(f"{data_dir}/df_arrests_test.csv", index=False)
+    df_arrests_test.to_csv(os.path.join(data_dir, 'df_arrests_test_lr.csv'), index=False)
+
+
+

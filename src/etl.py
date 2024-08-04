@@ -1,3 +1,7 @@
+'''
+PART 1: ETL the two datasets and save each in `data/` as .csv's
+'''
+
 import pandas as pd
 import os
 
@@ -42,6 +46,10 @@ def save_data(pred_universe, arrest_events, data_dir='./data'):
     :param arrest_events: Preprocessed DataFrame of the arrest_events dataset
     :param data_dir: Directory to save the CSV files
     """
+    # Ensure the data directory is created within the problem-set-2 directory
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    data_dir = os.path.join(base_dir, "..", "data")
+    
     os.makedirs(data_dir, exist_ok=True)
     
     pred_universe_path = os.path.join(data_dir, 'pred_universe_raw.csv')
